@@ -33,6 +33,7 @@ body{background:radial-gradient(ellipse at 30% 0%,#27231e 0%,var(--ground) 60%) 
 .mini small{font-family:var(--display);font-size:14px;letter-spacing:.08em;color:var(--silver-dim)}
 .mini:hover small{color:var(--silver)}
 header{overflow:hidden;max-height:420px;transition:max-height .7s ease,opacity .45s ease,margin .7s ease}
+header:has(.about[open]){max-height:1600px}
 body.session header{max-height:0;opacity:0;margin:-22px 0 0;pointer-events:none}
 body.session .mini{display:inline-flex}
 body.session .field{padding-block:40px}
