@@ -21,7 +21,7 @@ const LIMITS = {
   questionChars: 1000,
   historyTurns: 40,
   historyChars: 12000, // older turns beyond this are dropped from what the model sees
-  maxTokens: 2500,
+  maxTokens: 4000,
 };
 
 const LANG_RULE = {
@@ -130,6 +130,9 @@ export default async function handler(req) {
       model: process.env.MOONSHOT_MODEL || "kimi-k2.6",
       stream: true,
       max_tokens: LIMITS.maxTokens,
+      // Kimi K2.6 thinks privately before answering by default; that thinking can use up the
+      // whole reply budget and leave no answer. The table needs speech, not hidden reasoning.
+      ...(process.env.MOONSHOT_THINKING === "on" ? {} : { thinking: { type: "disabled" } }),
       messages: [
         { role: "system", content: buildSystem(seated, lang) },
         { role: "user", content: buildUser(history, question) },
