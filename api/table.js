@@ -52,8 +52,12 @@ ${guestCards}
 
 STAGING
 - Only the host and the guests listed above may speak. No one else.
+- Address only the seated guests and the visitor. Never call on, quote or ask a question of anyone who is not seated, even if an example elsewhere in these instructions uses that person (the worked examples show principles, not scripts).
+- The host's opening must hand the question to a seated guest by name, and every round must include each seated guest's answer. Never end the round after the host alone.
 - ${solo ? "There is one guest. The host may press them once, and the guest replies." : "After each guest's first answer, at least two turns must reply directly to another guest by name, and disagree where their real views clash."}
 - ${solo ? "4 to 6 turns in total." : "7 to 10 turns in total."} The host opens briefly and closes briefly. Guest turns are usually 2 to 4 sentences; a reflective turn may run longer.
+- At most ONE guest asks the visitor a question in a round (the host's closing may also ask one). The other guests answer, argue or offer; they do not also turn the question back. Never let two guests ask the visitor the same or a similar question.
+- Each turn is in ONE language from start to finish. Do not switch languages inside a turn, except a short quotation of a figure's own words in the original, immediately followed by a gloss in the turn's language.
 - If this is a continuing conversation, build on what has already been said, use what the visitor has told you, and do not repeat earlier lines or images.
 - ${LANG_RULE[lang]}
 - If the bottom line's danger tier applies, ignore the turn counts: the host (or "The table") speaks plainly, warmly and briefly to the real person.
@@ -63,7 +67,7 @@ One JSON object per line, nothing else, no code fences, no commentary:
 {"speaker":"<exact name: Roland Barthes, ${seated.map((k) => GUESTS[k].split(" (")[0]).join(", ")}, or The table>","to":"<name addressed, or Visitor>","text":"<what they say>"}`;
 }
 
-function buildUser(history, question) {
+function buildUser(history, question, cont) {
   let transcript = "";
   // Keep the most recent part of the conversation within the character budget.
   for (let i = history.length - 1; i >= 0; i--) {
@@ -74,6 +78,14 @@ function buildUser(history, question) {
         : `${t.speaker}${t.to ? " → " + t.to : ""}: ${t.text}\n`;
     if (transcript.length + line.length > LIMITS.historyChars) break;
     transcript = line + transcript;
+  }
+  if (cont) {
+    // The previous reply stopped after the host alone. Ask for the rest of the same round.
+    return `CONVERSATION SO FAR\n${transcript}\n` +
+      `The round above stopped too early: no guest has answered the visitor's latest message yet. ` +
+      `Continue the same round from where it stopped. Do not repeat or rewrite the lines already given. ` +
+      `If the host called on someone who is not seated, the host briefly turns instead to a seated guest. ` +
+      `Then the seated guests answer and reply to each other, and the host closes briefly.`;
   }
   return (transcript ? `CONVERSATION SO FAR\n${transcript}\n` : "") +
     `THE VISITOR NOW SAYS\n${question}`;
@@ -135,7 +147,7 @@ export default async function handler(req) {
       ...(process.env.MOONSHOT_THINKING === "on" ? {} : { thinking: { type: "disabled" } }),
       messages: [
         { role: "system", content: buildSystem(seated, lang) },
-        { role: "user", content: buildUser(history, question) },
+        { role: "user", content: buildUser(history, question, body.cont === true && history.length > 0) },
       ],
     }),
   });

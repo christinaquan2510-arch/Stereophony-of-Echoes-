@@ -36,6 +36,10 @@ header{overflow:hidden;max-height:420px;transition:max-height .7s ease,opacity .
 body.session header{max-height:0;opacity:0;margin:-22px 0 0;pointer-events:none}
 body.session .mini{display:inline-flex}
 body.session .field{padding-block:40px}
+body.session .floaters{display:none}
+.exit{display:none;font-size:10.5px;padding:6px 12px}
+body.session .exit{display:inline-flex;align-items:center;gap:6px}
+
 .lang{display:flex;border:1px solid var(--rim);border-radius:999px;overflow:hidden}
 .lang button{border:0;border-radius:0;background:transparent;color:var(--silver-dim);padding:5px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em}
 .lang button[aria-pressed="true"]{background:rgba(201,168,106,.16);color:var(--silver)}
@@ -79,7 +83,14 @@ h1.cjk{font-family:"Noto Serif SC",serif;letter-spacing:.3em;padding-left:.3em}
   .layout.has-convo{display:grid;grid-template-columns:minmax(0,2fr) minmax(320px,1fr);gap:28px;align-items:start}
   .has-convo .left{position:sticky;top:8px;max-width:none}
   .has-convo .left .stage{width:min(720px,100%,66vh)}
-  body.session .has-convo .left .stage{width:min(760px,100%,76vh)}
+  body.session .layout.has-convo{grid-template-columns:minmax(0,.82fr) minmax(0,1.18fr);gap:36px}
+  body.session .has-convo .left .stage{width:min(600px,100%,70vh)}
+  body.session .right .turn p{font-size:18.5px;line-height:1.62}
+  body.session .right .turn .who{font-size:16.5px}
+  body.session .right .turn{grid-template-columns:42px 1fr;gap:12px}
+  body.session .right .turn .av{width:42px;height:42px}
+  body.session .right .qline b{font-size:23px}
+  body.session .right .turn .bub{padding:10px 16px 12px}
   .has-convo .right{position:sticky;top:8px;max-height:calc(100vh - 16px);overflow-y:auto;padding:4px 6px 4px 0;animation:panelIn .5s ease-out;scrollbar-width:thin;scrollbar-color:var(--rim) transparent}
 }
 
@@ -217,6 +228,7 @@ footer{font-size:14px;color:var(--silver-dim);text-align:center;line-height:1.5}
 <div class="wrap">
   <div class="topbar">
     <button type="button" class="mini" id="mini" title="Show title"><span>古今回响</span><small>Stereophony of Echoes</small></button>
+    <button type="button" class="ghost exit" id="exit" data-i18n="exitBtn">← New question</button>
     <div class="lang" role="group" aria-label="Language"><button type="button" id="lEn" aria-pressed="true">EN</button><button type="button" id="lZh" aria-pressed="false">中文</button></div>
   </div>
   <header>
@@ -417,7 +429,7 @@ const UI = {
     hostP:"In \u201cThe Death of the Author\u201d (1967), Barthes argued that a text\u2019s meaning is not fixed by its author but made by its reader. At this table every guest is an echo rather than an author, and you, the reader, make the meaning. Who better to host than the man who declared the author dead? He also wrote A Lover\u2019s Discourse, so he is gentle with matters of the heart.",
     mottoP:"以古为镜，照见今日: use the past as a mirror, and see today clearly in it. It borrows from the Tang emperor Taizong: \u201cwith history as a mirror, one can understand the rise and fall of things.\u201d",
     codeLabel:"Enter the access code you were given",enter:"Enter",place:"Place a question on the table",ask:"Ask anything…",convene:"Convene",stop:"Stop",
-    hint:"Or pick a question drifting around the table",hintPhone:"Or convene to ask the one shown",sampleBtn:"See an example from testing",thinkingS:"thinking…",speakingS:"speaking",listeningS:"listening",silent:"The table fell silent. Please try again.",replies:"Replies",auto:"Auto",view:"View",table:"Table",transcript:"Transcript",blind:"Blind test",
+    hint:"Or pick a question drifting around the table",hintPhone:"Or convene to ask the one shown",sampleBtn:"See an example from testing",exitBtn:"← New question",thinkingS:"thinking…",speakingS:"speaking",listeningS:"listening",silent:"The table fell silent. Please try again.",replies:"Replies",auto:"Auto",view:"View",table:"Table",transcript:"Transcript",blind:"Blind test",
     privacy:"These voices are AI echoes, not the people themselves. Nothing you write here is saved.",
     pilotBadge:"Pilot",pilotLine:"A private preview, not the finished product. More figures are in development, and how faithfully each echo speaks is still being tested.",
     testsBtn:"What this pilot is testing",
@@ -443,7 +455,7 @@ const UI = {
     hostP:"巴特在《作者之死》（1967）中提出，文本的意义并不由作者决定，而是由读者创造。在这张桌边，每位客人都是回声而非作者，而你，读者，才是意义的创造者。还有谁比宣告“作者已死”的人更适合主持？他还写过《恋人絮语》，所以对心事格外温柔。",
     mottoP:"以古为镜，照见今日：以过去为镜，看清今天。化用自唐太宗“以古为镜，可以知兴替”。",
     codeLabel:"请输入你收到的访问码",enter:"进入",place:"把一个问题放到桌上",ask:"问什么都可以…",convene:"开席",stop:"停止",
-    hint:"或点选桌边飘过的一个问题",hintPhone:"或直接开席，提出正在显示的问题",sampleBtn:"查看一段测试示例",thinkingS:"思考中…",speakingS:"发言中",listeningS:"倾听中",silent:"圆桌一时沉默了，请再试一次。",replies:"回答语言",auto:"自动",view:"显示",table:"圆桌",transcript:"文字记录",blind:"盲测",
+    hint:"或点选桌边飘过的一个问题",hintPhone:"或直接开席，提出正在显示的问题",sampleBtn:"查看一段测试示例",exitBtn:"← 换个问题",thinkingS:"思考中…",speakingS:"发言中",listeningS:"倾听中",silent:"圆桌一时沉默了，请再试一次。",replies:"回答语言",auto:"自动",view:"显示",table:"圆桌",transcript:"文字记录",blind:"盲测",
     privacy:"这些声音是由 AI 重建的历史人物“回声”，并非本人。你在这里写下的内容不会被保存。",
     pilotBadge:"试验版",pilotLine:"目前为非公开预览，并非最终版本。更多人物开发中，每位人物“回声”的还原度仍在测试中。",
     testsBtn:"这个试验在测试什么",
@@ -617,7 +629,7 @@ function spawnFloater(){
   const field=$("field"), box=$("floaters"), stage=$("stage");
   const fr=field.getBoundingClientRect(), sr=stage.getBoundingClientRect();
   if(!fr.width) return;
-  if(isPhone()||busy) return;   // the table is talking: let the room go quiet
+  if(isPhone()||busy||document.body.classList.contains("session")) return;   // the table is talking: let the room go quiet
   const max=7;
   if(box.children.length>=max) return;
   const cx=sr.left-fr.left+sr.width/2, cy=sr.top-fr.top+sr.height/2, R=sr.width*0.5+8;
@@ -647,6 +659,10 @@ function startFloaters(){
 }
 
 /* ---------- Conversation ---------- */
+function fmt(el,text){
+  const esc=String(text).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+  el.innerHTML=esc.replace(/\*\*([^*\n]+)\*\*/g,"$1").replace(/\*([^*\n]+)\*/g,"<em>$1</em>");
+}
 function makeTurn(box,speaker,idx){
   const k=keyFor(speaker); const f=k?fig(k):{name:speaker||"The table",zh:speaker||"圆桌"};
   const blind=$("blind").checked && k && k!=="host";
@@ -686,7 +702,7 @@ function finishTurn(r,guests){
 }
 function addTurn(box,tt,idx,live=true,guests=seated){
   const r=makeTurn(box,tt.speaker,idx); const toK=setTurnTo(r,tt.to);
-  r.p.textContent=tt.text; if(live) speak(r.k,toK); finishTurn(r,guests);
+  fmt(r.p,tt.text); if(live) speak(r.k,toK); finishTurn(r,guests);
 }
 // Read a field from a JSON line that is still arriving, e.g. {"speaker":"Plato","to":"Visitor","text":"What do you me
 function partialField(buf,key,closed){
@@ -738,28 +754,42 @@ async function convene(th,question,st,btn){
       n++; if(n===1){ setSpin(SPIN_IDLE); st.textContent=t("session"); }
       live=makeTurn(th.turns,sp,n); live.row.classList.add("live"); speak(live.k,null); }
     const to=partialField(b,"to",true); if(to&&!live.toSet){ const toK=setTurnTo(live,to); speak(live.k,toK); }
-    const tx=partialField(b,"text"); if(tx!=null){ live.p.textContent=tx; followPanel(); }
+    const tx=partialField(b,"text"); if(tx!=null){ fmt(live.p,tx); followPanel(); }
   };
   const done=line=>{ line=line.trim(); if(!line||line.startsWith("```")) return;
     let tt=null; try{ tt=JSON.parse(line); }catch{}
     if(tt&&tt.text){
       if(!live){ grow(line); }
-      if(live){ live.p.textContent=tt.text; if(!live.toSet){ const toK=setTurnTo(live,tt.to); speak(live.k,toK); } finishTurn(live,th.seated); }
+      if(live){ fmt(live.p,tt.text); if(!live.toSet){ const toK=setTurnTo(live,tt.to); speak(live.k,toK); } finishTurn(live,th.seated); }
       produced.push(tt);
     } else if(live){ live.row.remove(); n--; }
     live=null; followPanel();
   };
-  try{
+  // One request to the table; its lines stream into this thread. Returns false if the request failed.
+  const ask=async(payload)=>{
+    pending=""; live=null;
     const res=await fetch("/api/table",{method:"POST",signal:ctl.signal,
       headers:{"content-type":"application/json","x-access-code":code},
-      body:JSON.stringify({question,seated:th.seated,history:th.history,lang:replyLang})});
-    if(res.status===401){ code=""; try{sessionStorage.removeItem("gjhx-code")}catch{}; $("gate").hidden=false; $("code").focus(); if(!th.history.length){ th.el.remove(); if(!$("log").children.length){ $("right").hidden=true; $("layout").classList.remove("has-convo"); } $("q").value=question; } $("status").textContent=t("needCode"); return; }
-    if(!res.ok){ const j=await res.json().catch(()=>({})); st.textContent=j.error||t("unreachable"); return; }
+      body:JSON.stringify(payload)});
+    if(res.status===401){ code=""; try{sessionStorage.removeItem("gjhx-code")}catch{}; $("gate").hidden=false; $("code").focus(); if(!th.history.length){ th.el.remove(); if(!$("log").children.length){ $("right").hidden=true; $("layout").classList.remove("has-convo"); } $("q").value=question; } $("status").textContent=t("needCode"); return false; }
+    if(!res.ok){ const j=await res.json().catch(()=>({})); st.textContent=j.error||t("unreachable"); return false; }
     const reader=res.body.getReader(); const dec=new TextDecoder();
     for(;;){ const {value,done:end}=await reader.read(); if(end) break;
       const chunk=dec.decode(value,{stream:true}); raw+=chunk;
       const lines=(pending+chunk).split("\n"); pending=lines.pop(); lines.forEach(done); grow(pending); }
-    done(pending);
+    done(pending); pending="";
+    return true;
+  };
+  const isGuest=x=>{ const k=keyFor(x.speaker); return !!k && th.seated.includes(k); };
+  try{
+    if(!await ask({question,seated:th.seated,history:th.history,lang:replyLang})) return;
+    // Safety net: if the round stopped after the host alone, ask once for the guests' part of the same round.
+    if(produced.length && !produced.some(isGuest) && !DANGER.test(question)){
+      st.textContent=t("gathering"); setSpin(SPIN_THINK); thinkingAll();
+      const soFar=[...th.history,{role:"visitor",text:question},...produced.map(x=>({role:"table",speaker:x.speaker,to:x.to,text:x.text}))];
+      await ask({question,seated:th.seated,history:soFar,lang:replyLang,cont:true});
+      setSpin(SPIN_IDLE);
+    }
     if(!produced.length){
       const clean=raw.replace(/```[a-z]*|```/g,"").trim();
       if(clean && !clean.startsWith("{")){ const tt={speaker:"The table",to:"Visitor",text:clean}; produced.push(tt); addTurn(th.turns,tt,1); }
@@ -797,6 +827,15 @@ function setMode(m){
   try{ localStorage.setItem("gjhx-mode",m); }catch{}
 }
 $("mTable").addEventListener("click",()=>setMode("table"));
+function endSession(){
+  if(busy && ctl) ctl.abort();
+  setTimeout(()=>{
+    $("log").replaceChildren(); $("right").hidden=true; $("layout").classList.remove("has-convo");
+    document.body.classList.remove("session"); clearStates(); $("lines").replaceChildren();
+    $("status").textContent=t("seatHelp"); window.scrollTo({top:0,behavior:reduced?"auto":"smooth"}); $("q").focus();
+  },60);
+}
+$("exit").addEventListener("click",endSession);
 $("mini").addEventListener("click",()=>{ document.body.classList.remove("session"); window.scrollTo({top:0,behavior:reduced?"auto":"smooth"}); });
 $("mText").addEventListener("click",()=>setMode("text"));
 

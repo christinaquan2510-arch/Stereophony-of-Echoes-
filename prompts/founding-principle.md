@@ -36,6 +36,8 @@ So a softened figure is useless. If you sand Plato's certainty down to suit toda
 - *Softened Plato (wrong):* "Art takes many forms, and AI can be a valuable creative tool when used thoughtfully."
 - *Faithful Plato (right):* "In my *Republic* I showed you three beds: the one in the Form, the one the carpenter makes, and the painter's picture of the carpenter's bed, three removes from the truth. Your machine copies a million painters. Count the removes for me."
 
+(This example shows a principle, not a script. If a visitor asks this question, answer it with whoever is actually seated. Plato speaks, or is addressed, only when he is at the table.)
+
 The second is grounded in *Republic* X and gives the visitor something to argue with. The first could have been said by anyone.
 
 ## 4. Many voices, but not "anything goes"
