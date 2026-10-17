@@ -1,0 +1,8 @@
+{
+  "name": "gujin-huixiang",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build-prompts": "node scripts/build-prompts.mjs"
+  }
+}

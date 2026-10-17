@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>古今回响 · Stereophony of Echoes</title>
+<meta name="description" content="A roundtable where echoes of historical figures answer your questions in their own voices.">
+<meta name="theme-color" content="#1b1917">
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/icon-192.png">
+<link rel="apple-touch-icon" href="/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Noto+Serif+SC:wght@400;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: the disc is an engraved silver-gilt bowl seen from above, with questions drifting around it; guests sit as medallions on its rim. On wide screens the bowl stays in view on the left while the conversation runs on the right; on phones they stack. Single deliberate look: tarnished silver and soft gold on warm charcoal. */
+:root{
+  color-scheme:dark;
+  --ground:#1b1917; --ground-2:#24211e; --ground-3:#2d2a26;
+  --silver:#d2ccc0; --silver-dim:#9c968a; --gilt:#c9a86a; --gilt-dim:#8d7444;
+  --sea:#86a09e; --line:#3a3631; --rim:#4c463e; --warn:#c48a6a;
+  --display:"Cormorant SC","Noto Serif SC",Georgia,serif;
+  --body:"Cormorant Garamond","Noto Serif SC",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html,body{margin:0}
+body{background:radial-gradient(ellipse at 30% 0%,#27231e 0%,var(--ground) 60%) fixed,var(--ground);color:var(--silver);font-family:var(--body);font-size:19px;line-height:1.55;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:1440px;margin:0 auto;padding-block:26px 64px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:22px}
+
+.topbar{display:flex;justify-content:flex-end}
+.lang{display:flex;border:1px solid var(--rim);border-radius:999px;overflow:hidden}
+.lang button{border:0;border-radius:0;background:transparent;color:var(--silver-dim);padding:5px 12px;font-family:var(--mono);font-size:11px;letter-spacing:.1em}
+.lang button[aria-pressed="true"]{background:rgba(201,168,106,.16);color:var(--silver)}
+
+header{display:flex;flex-direction:column;gap:6px;text-align:center;align-items:center;margin-top:-8px}
+.kicker{font-family:"Noto Serif SC",var(--body);font-size:14px;letter-spacing:.28em;color:var(--gilt)}
+.kicker.latin{font-family:var(--display);font-size:16px;letter-spacing:.14em}
+h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,5.2vw,52px);letter-spacing:.06em;margin:0;text-wrap:balance;line-height:1.1}
+h1.cjk{font-family:"Noto Serif SC",serif;letter-spacing:.3em;padding-left:.3em}
+.epi{font-style:italic;color:var(--silver-dim);font-size:19px;margin:0 auto;max-width:64ch;text-wrap:balance}
+.about{max-width:70ch;margin:2px auto 0;text-align:center}
+.about summary{display:inline-flex;align-items:center;gap:7px;cursor:pointer;list-style:none;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--silver-dim);border:1px solid var(--rim);border-radius:999px;padding:4px 12px}
+.about summary::-webkit-details-marker{display:none}
+.about summary:hover,.about[open] summary{color:var(--gilt);border-color:var(--gilt-dim)}
+.about summary .i{display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;border:1px solid currentColor;font-size:10px;font-family:var(--body);font-style:italic;letter-spacing:0;text-transform:none}
+.about .body{text-align:left;margin-top:12px;background:var(--ground-2);border:1px solid var(--line);border-radius:14px;padding:14px 18px;font-size:16.5px;line-height:1.55;color:var(--silver)}
+.about .body h3{font-family:var(--display);font-size:16px;letter-spacing:.06em;color:var(--gilt);margin:0 0 4px;font-weight:600}
+.about .body p{margin:0 0 12px}.about .body p:last-child{margin:0}
+.pilot{display:flex;flex-direction:column;align-items:center;gap:8px;text-align:center;border-top:1px solid var(--line);padding-top:18px}
+.pilot p{margin:0;font-size:15.5px;color:var(--silver-dim);max-width:70ch}
+.badge{display:inline-block;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gilt);border:1px solid var(--gilt-dim);border-radius:999px;padding:1px 8px;vertical-align:2px}
+.tests .body b{color:var(--gilt);font-weight:500}
+.tests .lead{color:var(--silver);font-style:italic}
+.tests .st{font-family:var(--mono);font-style:normal;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--sea);border:1px solid rgba(134,160,158,.45);border-radius:999px;padding:0 7px;margin-left:4px;white-space:nowrap}
+.tests .method{font-size:14.5px;color:var(--silver-dim);border-top:1px solid var(--line);padding-top:10px}
+
+/* Two columns on wide screens, one on narrow: the browser picks automatically from the screen width. */
+.layout{display:flex;flex-direction:column;gap:26px}
+.left,.right{display:flex;flex-direction:column;gap:18px;min-width:0}
+@media (min-width:1280px){
+  .layout{display:grid;grid-template-columns:3fr 2fr;gap:40px;align-items:start}
+  .left{position:sticky;top:12px}
+  .left .stage{width:min(680px,100%,56vh)}
+  .left .field{padding-block:56px}
+  .right .turn p{font-size:16.5px;line-height:1.5}
+  .right .turn .bub{padding:8px 12px 10px}
+  .right .turn{grid-template-columns:36px 1fr;gap:10px}.right .turn .av{width:36px;height:36px}
+  .right .qline b{font-size:20px}
+  .right{padding-top:10px}
+}
+
+/* The field around the bowl, where questions drift */
+.field{position:relative;padding-block:64px;width:100%}
+.floaters{position:absolute;inset:0;pointer-events:none;z-index:3}
+.floater{position:absolute;pointer-events:auto;max-width:200px;font-size:15.5px;line-height:1.3;color:var(--silver);background:rgba(36,33,30,.92);border:1px solid var(--gilt-dim);border-radius:14px;padding:7px 12px;text-align:left;font-family:var(--body);letter-spacing:0;text-transform:none;cursor:pointer;opacity:0;animation:drift 6.5s ease-in-out forwards;box-shadow:0 6px 16px rgba(0,0,0,.35)}
+.floater::after{content:"";position:absolute;width:10px;height:10px;background:inherit;border:inherit;border-top:0;border-left:0;transform:rotate(45deg);bottom:-6px;left:calc(50% - 5px)}
+.floater.tail-up::after{bottom:auto;top:-6px;transform:rotate(225deg)}
+.floater.tail-right::after{left:auto;right:-6px;bottom:calc(50% - 5px);transform:rotate(-45deg)}
+.floater.tail-left::after{left:-6px;bottom:calc(50% - 5px);transform:rotate(135deg)}
+.floater:hover,.floater:focus-visible{color:var(--gilt);border-color:var(--gilt)}
+@keyframes drift{0%{opacity:0;transform:translateY(8px) scale(.97)}15%{opacity:1;transform:none}80%{opacity:1}100%{opacity:0;transform:translateY(-10px)}}
+
+.stage{position:relative;width:min(660px,100%);aspect-ratio:1;margin:0 auto;max-width:100%}
+.bowl{position:absolute;inset:8%;border-radius:50%;
+  background:
+   repeating-conic-gradient(from 0deg, rgba(210,204,192,.045) 0 1.5deg, transparent 1.5deg 5deg),
+   radial-gradient(circle at 40% 30%, #3d3934 0%, #2b2824 50%, #1e1c19 100%);
+  box-shadow:inset 0 0 0 1px #5a5349, inset 0 0 40px rgba(0,0,0,.55), 0 24px 60px rgba(0,0,0,.5), 0 0 0 6px #23201c, 0 0 0 7px var(--gilt-dim)}
+.spin{position:absolute;inset:0;will-change:transform}
+.engrave{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.engrave .ring{fill:none;stroke:#5a5349;stroke-width:.25}
+.engrave .gilt{fill:none;stroke:var(--gilt-dim);stroke-width:.35}
+.engrave .beads{fill:none;stroke:var(--gilt-dim);stroke-width:.6;stroke-dasharray:.25 1.4;stroke-linecap:round}
+.engrave .wave{fill:none;stroke:#4f4940;stroke-width:.3}
+.engrave text{font-family:var(--mono);font-size:1.75px;letter-spacing:.42px;fill:var(--gilt-dim);text-transform:uppercase}
+.threads{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.threads path{fill:none;stroke:var(--gilt);stroke-width:1.1;opacity:.8;stroke-dasharray:3 4}
+
+.seat{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:3px;width:120px;text-align:center;z-index:2}
+.medal{width:72px;height:72px;border-radius:50%;overflow:hidden;background:#3a352f;box-shadow:0 0 0 2px #1b1917,0 0 0 3.5px var(--gilt-dim),0 6px 14px rgba(0,0,0,.55);transition:box-shadow .35s,transform .35s}
+.medal svg{display:block;width:100%;height:100%}
+.seat.host .medal{box-shadow:0 0 0 2px #1b1917,0 0 0 3.5px var(--gilt),0 6px 14px rgba(0,0,0,.55)}
+.seat.speaking .medal{box-shadow:0 0 0 2px #1b1917,0 0 0 4px var(--gilt),0 0 26px rgba(201,168,106,.6);transform:scale(1.08)}
+.seat .lbl{display:flex;flex-direction:column;align-items:center;gap:1px;margin-top:4px;background:rgba(22,20,18,.9);border:1px solid #3a3631;border-radius:8px;padding:2px 8px 3px}
+.seat .nm{font-family:var(--display);font-size:15px;letter-spacing:.03em;line-height:1.1;white-space:nowrap}
+.seat.top{flex-direction:column-reverse}.seat.top .lbl{margin:0 0 4px}
+.seat .rl{font-family:var(--mono);font-size:8.5px;letter-spacing:.1em;color:var(--silver-dim);text-transform:uppercase;line-height:1.3;white-space:nowrap}
+.blind .seat:not(.host) .lbl{visibility:hidden}
+.blind .seat:not(.host) .medal svg{filter:brightness(0) opacity(.35)}
+
+.centre{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:50%;display:flex;flex-direction:column;gap:7px;z-index:2}
+.centre label{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+textarea,input[type=password]{width:100%;background:rgba(16,15,13,.8);border:1px solid var(--rim);border-radius:12px;color:var(--silver);font-family:var(--body);font-size:17px;line-height:1.35;padding:10px 12px}
+#q{resize:none;min-height:74px;text-align:center}
+#q::placeholder{color:var(--silver-dim);opacity:1;font-style:italic}
+.hint{font-family:var(--mono);font-size:8.5px;letter-spacing:.08em;color:var(--silver-dim);text-align:center;line-height:1.4}
+textarea:focus,input:focus{outline:2px solid var(--gilt);outline-offset:1px}
+button{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;border-radius:999px;padding:8px 14px;cursor:pointer;border:1px solid var(--gilt);background:var(--gilt);color:#1b1917}
+button.ghost{background:transparent;color:var(--silver);border-color:var(--rim)}
+button:disabled{opacity:.45;cursor:default}
+button:focus-visible{outline:2px solid var(--silver);outline-offset:2px}
+.btns{display:flex;gap:6px}.btns button{flex:1}
+
+.controls{display:flex;flex-direction:column;gap:12px;align-items:center}
+.roster{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.chip{display:flex;align-items:center;gap:7px;font-family:var(--body);font-size:15px;padding:3px 12px 3px 3px;border-radius:999px;border:1px solid var(--rim);background:transparent;color:var(--silver-dim);letter-spacing:0;text-transform:none}
+.chip .av{width:26px;height:26px;border-radius:50%;overflow:hidden;flex:none;opacity:.6}
+.chip .av svg{display:block;width:100%;height:100%}
+.chip[aria-pressed="true"]{border-color:var(--gilt-dim);color:var(--silver);background:rgba(201,168,106,.1)}
+.chip[aria-pressed="true"] .av{opacity:1}
+.opts{display:flex;flex-wrap:wrap;gap:10px 16px;justify-content:center;align-items:center}
+.toggle{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--silver-dim)}
+.toggle input{accent-color:var(--gilt);width:16px;height:16px}
+.seg{display:flex;align-items:center;border:1px solid var(--rim);border-radius:999px;overflow:hidden}
+.seg span{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--silver-dim);padding:0 4px 0 12px}
+.seg button{border:0;border-radius:0;background:transparent;color:var(--silver-dim);padding:6px 11px}
+.seg button[aria-pressed="true"]{background:rgba(201,168,106,.16);color:var(--silver)}
+.note{font-family:var(--mono);font-size:11px;color:var(--silver-dim);letter-spacing:.05em;text-align:center;margin:0}
+.privacy{font-size:15px;color:var(--silver-dim);text-align:center;margin:0;font-style:italic}
+.score{text-align:center;font-family:var(--mono);font-size:12px;letter-spacing:.1em;color:var(--gilt);margin:0}
+
+.gate{display:flex;flex-direction:column;gap:10px;align-items:center;border:1px solid var(--rim);border-radius:14px;padding:18px;background:var(--ground-2)}
+.gate .row{display:flex;gap:8px;width:min(360px,100%)}
+
+/* Conversation */
+.log{display:flex;flex-direction:column;gap:34px}
+.thread{display:flex;flex-direction:column;gap:14px;border-top:1px solid var(--line);padding-top:18px}
+.turns{display:flex;flex-direction:column;gap:14px}
+.qline{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sea)}
+.qline b{display:block;font-family:var(--body);font-size:23px;letter-spacing:0;text-transform:none;color:var(--silver);font-weight:500;margin-top:4px}
+.example{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--silver-dim);border:1px dashed var(--rim);border-radius:999px;padding:2px 9px;margin-left:8px;vertical-align:middle}
+.turn{display:grid;grid-template-columns:44px 1fr;gap:12px;align-items:start}
+.turn .av{width:44px;height:44px;border-radius:50%;overflow:hidden;box-shadow:0 0 0 1.5px var(--gilt-dim);background:#3a352f}
+.turn .av svg{display:block;width:100%;height:100%}
+.turn .bub{background:var(--ground-2);border:1px solid var(--line);border-radius:4px 16px 16px 16px;padding:10px 14px 12px;min-width:0}
+.turn .who{font-family:var(--display);font-size:16px;color:var(--gilt);letter-spacing:.03em;line-height:1.2;display:flex;flex-wrap:wrap;gap:2px 8px;align-items:baseline}
+.turn .who small{font-family:var(--mono);font-size:9.5px;color:var(--silver-dim);letter-spacing:.08em;text-transform:uppercase}
+.turn p{margin:4px 0 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.turn.host .bub{background:transparent;border-style:dashed;border-color:var(--gilt-dim)}
+.turn.host p{font-style:italic;color:var(--silver-dim)}
+.turn.plain .bub{background:var(--ground-3);border-color:var(--sea)}
+.turn.plain .who{color:var(--silver)}
+.visitor{align-self:flex-end;max-width:80%;background:rgba(134,160,158,.14);border:1px solid rgba(134,160,158,.4);border-radius:16px 4px 16px 16px;padding:8px 14px;color:var(--silver)}
+.visitor::before{content:attr(data-you);display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--sea)}
+.mode-transcript .turn{grid-template-columns:130px 1fr;gap:14px}
+.mode-transcript .turn .av{display:none}
+.mode-transcript .turn .bub{display:contents}
+.mode-transcript .turn .who{flex-direction:column;gap:3px}
+.mode-transcript .visitor{align-self:stretch;max-width:none;background:none;border:0;border-left:2px solid var(--sea);border-radius:0;padding:0 0 0 12px;font-style:italic;color:var(--sea)}
+.guess{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+select{font-family:var(--body);font-size:15px;background:var(--ground-3);color:var(--silver);border:1px solid var(--rim);border-radius:6px;padding:3px 6px}
+.verdict{font-family:var(--mono);font-size:11px;letter-spacing:.08em}
+.ok{color:var(--sea)}.no{color:var(--warn)}
+.reply{display:flex;gap:8px;align-items:flex-end}
+.reply textarea{min-height:46px;resize:vertical;font-size:16px}
+.status{font-family:var(--mono);font-size:11px;color:var(--silver-dim);letter-spacing:.05em}
+footer{font-size:14px;color:var(--silver-dim);text-align:center;line-height:1.5}
+
+@media (max-width:600px){
+  body{font-size:18px}
+  .field{padding-block:46px}
+  .floaters{display:none}
+  .seat{width:80px}.medal{width:48px;height:48px}
+  .seat .nm{font-size:12px;white-space:normal}.seat .rl{display:none}.seat .lbl{padding:1px 6px}
+  .centre{width:56%} #q{min-height:56px;font-size:15px}
+  .mode-transcript .turn{grid-template-columns:1fr;gap:4px}
+  .turn{grid-template-columns:36px 1fr;gap:9px}.turn .av{width:36px;height:36px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}.floater{animation:none;opacity:.9}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="lang" role="group" aria-label="Language"><button type="button" id="lEn" aria-pressed="true">EN</button><button type="button" id="lZh" aria-pressed="false">中文</button></div>
+  </div>
+  <header>
+    <span class="kicker" id="kicker">古今回响 · 以古为镜，照见今日</span>
+    <h1 id="title">Stereophony of Echoes</h1>
+    <p class="epi" data-i18n="epi">Ask anything. Echoes of the past, gathered at one table.</p>
+    <details class="about">
+      <summary><span class="i">i</span><span data-i18n="aboutBtn">Why this name? Why is Barthes the host?</span></summary>
+      <div class="body">
+        <h3 data-i18n="nameH">The name</h3>
+        <p data-i18n="nameP"></p>
+        <h3 data-i18n="hostH">The host</h3>
+        <p data-i18n="hostP"></p>
+        <h3 data-i18n="mottoH">The motto</h3>
+        <p data-i18n="mottoP"></p>
+      </div>
+    </details>
+  </header>
+
+  <div class="layout">
+    <div class="left">
+      <section class="gate" id="gate" hidden>
+        <label for="code" class="note" data-i18n="codeLabel">Enter the access code you were given</label>
+        <div class="row"><input type="password" id="code" autocomplete="off"><button type="button" id="codeBtn" data-i18n="enter">Enter</button></div>
+      </section>
+
+      <div class="field" id="field">
+        <div class="floaters" id="floaters" aria-label="Example questions"></div>
+        <div class="stage" id="stage">
+          <div class="spin" id="spin">
+          <div class="bowl"></div>
+          <svg class="engrave" viewBox="0 0 100 100" aria-hidden="true">
+            <defs><path id="rimpath" d="M50 50 m-38.6 0 a38.6 38.6 0 1 1 77.2 0 a38.6 38.6 0 1 1 -77.2 0"/></defs>
+            <circle class="gilt" cx="50" cy="50" r="41.2"/>
+            <circle class="beads" cx="50" cy="50" r="40.4"/>
+            <text><textPath href="#rimpath" id="rimtext"></textPath></text>
+            <circle class="ring" cx="50" cy="50" r="36.6"/>
+            <path class="wave" id="wave" d=""/>
+            <circle class="ring" cx="50" cy="50" r="30.4"/>
+            <circle class="beads" cx="50" cy="50" r="29.6"/>
+            <circle class="gilt" cx="50" cy="50" r="28.8"/>
+          </svg>
+          </div>
+          <svg class="threads" id="lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true"></svg>
+          <div id="seats"></div>
+          <form class="centre" id="form">
+            <label for="q" data-i18n="place">Place a question on the table</label>
+            <textarea id="q" rows="3"></textarea>
+            <div class="btns">
+              <button type="submit" id="ask" data-i18n="convene">Convene</button>
+              <button type="button" class="ghost" id="stop" data-i18n="stop" hidden>Stop</button>
+            </div>
+            <div class="hint" data-i18n="hint">Or pick a question drifting around the table</div>
+          </form>
+        </div>
+      </div>
+
+      <div class="controls">
+        <div class="roster" id="roster"></div>
+        <div class="opts">
+          <div class="seg" role="group" id="replyLangGroup"><span data-i18n="replies">Replies</span>
+            <button type="button" data-rl="auto" aria-pressed="true" data-i18n="auto">Auto</button>
+            <button type="button" data-rl="zh" aria-pressed="false">中文</button>
+            <button type="button" data-rl="en" aria-pressed="false">English</button>
+          </div>
+          <div class="seg" role="group"><span data-i18n="view">View</span>
+            <button type="button" id="mTable" aria-pressed="true" data-i18n="table">Table</button>
+            <button type="button" id="mText" aria-pressed="false" data-i18n="transcript">Transcript</button>
+          </div>
+          <label class="toggle"><input type="checkbox" id="blind"> <span data-i18n="blind">Blind test</span></label>
+        </div>
+      </div>
+    </div>
+
+    <div class="right">
+      <p class="note" id="status"></p>
+      <p class="score" id="score" hidden></p>
+      <p class="privacy" data-i18n="privacy">These voices are AI echoes, not the people themselves. Nothing you write here is saved.</p>
+      <section class="log" id="log" aria-live="polite"></section>
+    </div>
+  </div>
+
+  <section class="pilot">
+    <p><span class="badge" data-i18n="pilotBadge">Pilot</span> <span data-i18n="pilotLine">A private preview, not the finished product. More figures are in development, and how faithfully each echo speaks is still being tested.</span></p>
+    <details class="about tests">
+      <summary><span class="i">i</span><span data-i18n="testsBtn">What we're testing</span></summary>
+      <div class="body">
+        <p class="lead" data-i18n="tLead"></p>
+        <p><b data-i18n="t1h"></b> <span data-i18n="t1"></span> <em class="st" data-i18n="sTest"></em></p>
+        <p><b data-i18n="t2h"></b> <span data-i18n="t2"></span> <em class="st" data-i18n="sTest"></em></p>
+        <p><b data-i18n="t3h"></b> <span data-i18n="t3"></span> <em class="st" data-i18n="sTest"></em></p>
+        <p><b data-i18n="t4h"></b> <span data-i18n="t4"></span> <em class="st" data-i18n="sProg"></em></p>
+        <p><b data-i18n="t5h"></b> <span data-i18n="t5"></span> <em class="st" data-i18n="sTest"></em></p>
+        <p class="method" data-i18n="tMethod"></p>
+      </div>
+    </details>
+  </section>
+  <footer><span data-i18n="footer1">Powered by Kimi · A pilot by 全彤悦 Christina</span><br><span data-i18n="footer2">Portraits are original illustrations, not likenesses from photographs.</span></footer>
+</div>
+
+<script>
+/* ---------- Portraits: original stylised illustrations, one shared style ---------- */
+const SK="#e8d4ba", SKS="#d4bb9b", INK="#2a211b";
+const face=(cy=44,rx=14,ry=17)=>`<ellipse cx="35.6" cy="${cy+2}" rx="2.6" ry="3.6" fill="${SKS}"/><ellipse cx="64.4" cy="${cy+2}" rx="2.6" ry="3.6" fill="${SKS}"/><ellipse cx="50" cy="${cy}" rx="${rx}" ry="${ry}" fill="${SK}"/>`;
+const neck=(c=SK)=>`<path d="M44 56 L44 70 L56 70 L56 56 Z" fill="${c}"/><path d="M44 62 Q50 66 56 62 L56 70 L44 70Z" fill="${SKS}"/>`;
+const eyes=(y=45,cls="")=>`<ellipse cx="44.2" cy="${y}" rx="1.5" ry="1.8" fill="${INK}"/><ellipse cx="55.8" cy="${y}" rx="1.5" ry="1.8" fill="${INK}"/>`;
+const brows=(y=40.5,c=INK,w=1)=>`<path d="M40.5 ${y} Q44 ${y-1.6} 47.5 ${y}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round"/><path d="M52.5 ${y} Q56 ${y-1.6} 59.5 ${y}" stroke="${c}" stroke-width="${w}" fill="none" stroke-linecap="round"/>`;
+const nose=(y=46)=>`<path d="M50.2 ${y} Q48.4 ${y+5} 50.6 ${y+6}" stroke="${SKS}" stroke-width="1.1" fill="none" stroke-linecap="round"/>`;
+const mouth=(y=55.5)=>`<path d="M46.5 ${y} Q50 ${y+1.6} 53.5 ${y}" stroke="#9a6b5a" stroke-width="1.1" fill="none" stroke-linecap="round"/>`;
+const cheeks=(y=50)=>`<ellipse cx="42" cy="${y}" rx="2.4" ry="1.4" fill="#e3a993" opacity=".35"/><ellipse cx="58" cy="${y}" rx="2.4" ry="1.4" fill="#e3a993" opacity=".35"/>`;
+const svg=(bg,body)=>`<svg viewBox="13 9 74 74" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect x="-10" y="-10" width="120" height="120" fill="${bg}"/><circle cx="50" cy="40" r="34" fill="#fff" opacity=".05"/>${body}</svg>`;
+
+const PORTRAITS={
+  woolf: svg("#55665e",
+    `<path d="M33 47 C30 30 40 24 50 24 C61 24 70 31 67 48 C66 56 64 60 60 62 L40 62 C36 60 34 55 33 47Z" fill="#4a3325"/>`+
+    `<circle cx="63.5" cy="58" r="6" fill="#4a3325"/><path d="M60 55 q4 2 7 0" stroke="#3a271c" stroke-width=".8" fill="none"/>`+
+    neck()+`<path d="M14 100 C16 80 30 71 44 70 L50 80 L56 70 C70 71 84 80 86 100Z" fill="#4b3a47"/><path d="M44 70 L50 80 L56 70 L53 70 L50 75 L47 70Z" fill="#e9e1d2"/>`+
+    face(44,13,18.5)+`<path d="M50 26 C41 26 35.5 33 36.5 46 C39 37 44 32 50 30 C56 32 61 37 63.5 46 C64.5 33 59 26 50 26Z" fill="#4a3325"/><path d="M50 26.5 L50 30.5" stroke="#3a271c" stroke-width=".8"/>`+
+    brows(40.5,"#3a271c",.9)+`<path d="M42.4 44.2 Q44.2 43.2 46 44.2" stroke="${INK}" stroke-width=".9" fill="none"/><path d="M54 44.2 Q55.8 43.2 57.6 44.2" stroke="${INK}" stroke-width=".9" fill="none"/>`+eyes(45.6)+nose(46)+mouth(56)),
+  plato: svg("#875742",
+    `<path d="M12 100 C14 80 30 70 50 70 C70 70 86 80 88 100Z" fill="#dcd2c2"/><path d="M24 76 C40 84 58 90 74 100 L60 100 C48 92 36 86 22 82Z" fill="#c2b5a1"/>`+neck()+face(43,14,17)+
+    `<path d="M36 40 C35 28 42 24 50 24 C58 24 65 28 64 40 C61 33 56 30 50 30 C44 30 39 33 36 40Z" fill="#a39d92"/>`+
+    [38,43,48,53,58,62].map((x,i)=>`<circle cx="${x}" cy="${27+(i%2)*1.5}" r="3.2" fill="#a39d92"/>`).join("")+
+    `<path d="M36 46 C35 62 42 74 50 76 C58 74 65 62 64 46 C61 54 56 57 50 57 C44 57 39 54 36 46Z" fill="#b0aa9f"/>`+
+    [[40,62],[45,67],[50,70],[55,67],[60,62],[43,72],[50,75],[57,72]].map(([x,y])=>`<circle cx="${x}" cy="${y}" r="2.8" fill="#b0aa9f"/>`).join("")+
+    `<path d="M43 53.5 Q50 50.5 57 53.5 Q50 55.5 43 53.5Z" fill="#9e988d"/>`+brows(40,"#7d776d",1.1)+eyes(45)+nose(45.5)),
+  sushi: svg("#3c625c",
+    `<path d="M12 100 C14 80 30 71 50 71 C70 71 86 80 88 100Z" fill="#2e3a45"/><path d="M42 71 L58 92 L55 100 L50 100 L38 74Z" fill="#e8e2d6"/><path d="M58 71 L44 90 L46 96 L62 74Z" fill="#dcd5c7"/>`+neck()+face(45,13.5,17)+
+    `<path d="M35.5 34 L37.5 9 Q50 5 62.5 9 L64.5 34 Q50 31 35.5 34Z" fill="#1d1b19"/><path d="M50 7 L50 32.5" stroke="#3a3632" stroke-width="1.2"/><path d="M35 34 Q50 30.5 65 34 L65 36.5 Q50 33 35 36.5Z" fill="#2b2825"/>`+
+    `<path d="M48.2 59.5 Q50 61 51.8 59.5 L51 78 Q50 81 49 78Z" fill="#1d1b19"/><path d="M47.5 53.6 Q44.5 55 43 60" stroke="#1d1b19" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M52.5 53.6 Q55.5 55 57 60" stroke="#1d1b19" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M46.5 53.4 Q50 52 53.5 53.4" stroke="#1d1b19" stroke-width="1.2" fill="none"/><path d="M45 60 Q44 66 45.5 70 M55 60 Q56 66 54.5 70" stroke="#2b2825" stroke-width=".7" fill="none"/>`+mouth(56.6)+
+    brows(41,INK,1.1)+`<path d="M42.6 46 Q44.2 45 45.8 46" stroke="${INK}" stroke-width="1.2" fill="none"/><path d="M54.2 46 Q55.8 45 57.4 46" stroke="${INK}" stroke-width="1.2" fill="none"/>`+nose(46.5)),
+  freud: svg("#6a3d34",
+    `<path d="M12 100 C14 80 30 71 50 71 C70 71 86 80 88 100Z" fill="#2b2b2e"/><path d="M43 71 L50 84 L57 71Z" fill="#ebe7df"/><path d="M48.5 75 L51.5 75 L52.5 90 L50 94 L47.5 90Z" fill="#7a2e28"/>`+neck()+face(43,14,17)+
+    `<path d="M35.5 42 C34 31 38 26 42 25 C40 30 39 36 39.5 42Z" fill="#bdb7ad"/><path d="M64.5 42 C66 31 62 26 58 25 C60 30 61 36 60.5 42Z" fill="#bdb7ad"/><path d="M42 26.5 Q50 23.5 58 26.5 Q50 26 42 26.5Z" fill="#bdb7ad"/>`+
+    `<path d="M36 47 C36 60 42 68 50 69 C58 68 64 60 64 47 C61 54 57 57 50 57 C43 57 39 54 36 47Z" fill="#d0cbc2"/><path d="M42.5 53.5 Q50 50 57.5 53.5 Q53 56.5 50 55 Q47 56.5 42.5 53.5Z" fill="#c3bdb3"/>`+
+    brows(39.5,"#6e685f",1.1)+eyes(44.5)+`<circle cx="44.2" cy="44.5" r="4.6" fill="none" stroke="${INK}" stroke-width=".9"/><circle cx="55.8" cy="44.5" r="4.6" fill="none" stroke="${INK}" stroke-width=".9"/><path d="M48.8 44 Q50 43 51.2 44" stroke="${INK}" stroke-width=".9" fill="none"/>`+nose(46)),
+  leonardo: svg("#8a6838",
+    `<path d="M12 100 C14 80 30 71 50 71 C70 71 86 80 88 100Z" fill="#7a3a2c"/>`+
+    `<path d="M33 40 C30 56 30 70 27 84 L37 82 C36 70 37 58 38 46Z" fill="#e4dfd4"/><path d="M67 40 C70 56 70 70 73 84 L63 82 C64 70 63 58 62 46Z" fill="#e4dfd4"/>`+neck()+face(44,13.5,17)+
+    `<path d="M36 47 C35 66 42 86 50 98 C58 86 65 66 64 47 C61 55 57 58 50 58 C43 58 39 55 36 47Z" fill="#ebe6dc"/><path d="M43 85 q3 6 7 13 M57 85 q-3 6 -7 13 M46 66 q2 8 4 14 M54 66 q-2 8 -4 14" stroke="#cfc9bd" stroke-width=".8" fill="none"/>`+
+    `<path d="M42 54.5 Q50 51 58 54.5 Q54 57 50 55.6 Q46 57 42 54.5Z" fill="#d6d0c4"/>`+
+    `<path d="M32 33 C32 22 42 18 52 19 C62 20 69 25 68 33 C60 30 42 30 32 33Z" fill="#2b2622"/><path d="M33 33 Q50 28.5 67 33" stroke="#1d1a17" stroke-width="1" fill="none"/>`+
+    `<path d="M36.5 34 C36 38 36.5 41 37.5 44 M63.5 34 C64 38 63.5 41 62.5 44" stroke="#e4dfd4" stroke-width="3" fill="none"/>`+
+    brows(40.2,"#b8b2a6",1.4)+eyes(45)+nose(45.5)),
+  einstein: svg("#4d5d71",
+    `<path d="M12 100 C14 80 30 71 50 71 C70 71 86 80 88 100Z" fill="#6c6964"/><path d="M42 71 L50 79 L58 71 L56 70 L50 75 L44 70Z" fill="#ebe7df"/>`+neck()+
+    `<path d="M50 17 L54 22 L60 18 L61 24 L68 22 L66 28 L73 30 L68 34 L74 39 L67 41 L71 47 L64 46 L50 34 L36 46 L29 47 L33 41 L26 39 L32 34 L27 30 L34 28 L32 22 L39 24 L40 18 L46 22Z" fill="#ecebe6"/>`+
+    face(45,14,17)+`<path d="M37 37 Q42 31 50 31 Q58 31 63 37 Q58 34 50 34 Q42 34 37 37Z" fill="#ecebe6"/>`+
+    `<path d="M41 39.5 Q44.5 37 48 39.5 M52 39.5 Q55.5 37 59 39.5" stroke="#cfccc5" stroke-width="2" fill="none" stroke-linecap="round"/>`+
+    `<path d="M43 46.4 Q44.4 47.4 45.8 46.4 M54.2 46.4 Q55.6 47.4 57 46.4" stroke="${INK}" stroke-width="1" fill="none"/>`+eyes(45.2)+nose(46.5)+
+    `<path d="M41 54.8 Q45 51.5 50 53.5 Q55 51.5 59 54.8 Q56 58.5 50 56.6 Q44 58.5 41 54.8Z" fill="#d2cfc8"/>`+mouth(58.6)),
+  dickinson: svg("#6b5f7d",
+    `<path d="M14 100 C16 80 30 71 50 71 C70 71 84 80 86 100Z" fill="#efebe2"/><path d="M50 72 L50 100" stroke="#d9d3c6" stroke-width=".8"/>`+[78,84,90,96].map(y=>`<circle cx="50" cy="${y}" r=".9" fill="#c9c2b3"/>`).join("")+
+    `<path d="M42 58 L42 71 Q50 74 58 71 L58 58Z" fill="#efebe2"/>`+`<path d="M44 56 L44 66 L56 66 L56 56Z" fill="${SK}"/>`+`<path d="M43 64.5 L57 64.5 L57 67 L43 67Z" fill="#2a221c"/>`+
+    `<path d="M34.5 50 C33 30 41 25 50 25 C59 25 67 30 65.5 50 C65 55 63 58 61 59 L39 59 C37 58 35 55 34.5 50Z" fill="#5c3324"/>`+face(45,12.5,16.5)+
+    `<path d="M50 27.5 C42 27.5 36.5 33 37 47 C39 38 44 33 50 31 C56 33 61 38 63 47 C63.5 33 58 27.5 50 27.5Z" fill="#5c3324"/><path d="M50 27.5 L50 31" stroke="#4a2719" stroke-width=".8"/>`+
+    brows(41,"#4a2719",.9)+`<ellipse cx="44.4" cy="45.6" rx="1.8" ry="2.1" fill="${INK}"/><ellipse cx="55.6" cy="45.6" rx="1.8" ry="2.1" fill="${INK}"/><circle cx="45" cy="45" r=".55" fill="#fff"/><circle cx="56.2" cy="45" r=".55" fill="#fff"/>`+nose(46.5)+cheeks(51)+mouth(55.4)),
+  barthes: svg("#a5844a",
+    `<path d="M12 100 C14 80 30 71 50 71 C70 71 86 80 88 100Z" fill="#33302c"/><path d="M38 69 Q50 76 62 69 L64 74 Q50 82 36 74Z" fill="#8a3d32"/><path d="M57 76 L61 92 L56 94 L53 78Z" fill="#7a342b"/>`+neck()+face(43,14.5,17)+
+    `<path d="M35.5 42 C33 28 41 23 50 23.5 C60 24 67 29 64.5 42 C63 35 60 31 55 30 C50 30 42 31 37 37Z" fill="#3e3934"/><path d="M37 37 C44 30.5 54 29 63 32" stroke="#6b645b" stroke-width=".9" fill="none"/><path d="M36 40 C35.5 37 36 34 37 32" stroke="#7d766c" stroke-width="1.6" fill="none"/>`+
+    brows(39.5,"#2f2a26",1.2)+`<path d="M42.6 44.6 Q44.2 43.6 45.8 44.6 M54.2 44.6 Q55.8 43.6 57.4 44.6" stroke="${INK}" stroke-width=".9" fill="none"/>`+eyes(45.3)+nose(45.5)+mouth(55.5)),
+};
+const UNKNOWN=svg("#3a352f",`<text x="50" y="62" text-anchor="middle" font-size="34" font-family="Georgia,serif" fill="#8d7444">?</text>`);
+
+/* ---------- Figures: one label rule for all. Place = birthplace, as named in their time. ---------- */
+const FIGURES = {
+  woolf:{name:"Virginia Woolf",zh:"弗吉尼亚·伍尔夫",short:"Novelist",shortZh:"小说家",role:"Novelist and essayist",roleZh:"小说家、散文家",place:"London, England",placeZh:"英格兰 · 伦敦",dates:"1882–1941",match:["woolf","伍尔夫"]},
+  plato:{name:"Plato",zh:"柏拉图",short:"Philosopher",shortZh:"哲学家",role:"Philosopher, founder of the Academy",roleZh:"哲学家，学园创立者",place:"Athens, Ancient Greece",placeZh:"古希腊 · 雅典",dates:"c.428–348 BCE",datesZh:"约前428–前348",match:["plato","柏拉图"]},
+  sushi:{name:"苏轼 Su Shi",zh:"苏轼",short:"Song poet",shortZh:"宋代文人",role:"Poet, painter and statesman of the Song dynasty",roleZh:"北宋文学家、书画家、官员",place:"Meishan, Song China",placeZh:"北宋 · 眉山",dates:"1037–1101",match:["su shi","苏轼","蘇軾","dongpo","东坡","苏子"]},
+  freud:{name:"Sigmund Freud",zh:"西格蒙德·弗洛伊德",short:"Psychoanalyst",shortZh:"精神分析学家",role:"Founder of psychoanalysis",roleZh:"精神分析创始人",place:"Freiberg, Austrian Empire",placeZh:"奥地利帝国 · 弗莱堡",dates:"1856–1939",match:["freud","弗洛伊德"]},
+  leonardo:{name:"Leonardo da Vinci",zh:"列奥纳多·达·芬奇",short:"Painter, engineer",shortZh:"画家、工程师",role:"Painter, engineer and inventor",roleZh:"画家、工程师、发明家",place:"Vinci, Republic of Florence",placeZh:"佛罗伦萨共和国 · 芬奇镇",dates:"1452–1519",match:["leonardo","da vinci","达芬奇","达·芬奇"]},
+  einstein:{name:"Albert Einstein",zh:"阿尔伯特·爱因斯坦",short:"Physicist",shortZh:"物理学家",role:"Physicist",roleZh:"物理学家",place:"Ulm, German Empire",placeZh:"德意志帝国 · 乌尔姆",dates:"1879–1955",match:["einstein","爱因斯坦"]},
+  dickinson:{name:"Emily Dickinson",zh:"艾米莉·狄金森",short:"Poet",shortZh:"诗人",role:"Poet",roleZh:"诗人",place:"Amherst, United States",placeZh:"美国 · 阿默斯特",dates:"1830–1886",match:["dickinson","狄金森","emily"]},
+};
+const HOST = {name:"Roland Barthes",zh:"罗兰·巴特",short:"Host",shortZh:"主持",role:"Critic and theorist · your host",roleZh:"文学批评家、理论家 · 主持人",place:"Cherbourg, France",placeZh:"法国 · 瑟堡",dates:"1915–1980",match:["barthes","巴特"]};
+const SAFE = {
+  en:"It sounds like you are carrying something very heavy right now. Your life matters, and you don't have to hold this alone. Please reach out to someone you trust today, or contact your local emergency number or a crisis line if you might be in danger; findahelpline.com lists services by country. If you'd like, you can keep talking to us here.",
+  zh:"听起来你现在承受着很沉重的东西。你的生命很重要，你不必独自扛着。请今天就联系一个你信任的人；如果你可能有危险，请拨打当地紧急电话或心理援助热线（findahelpline.com 可按地区查找）。如果你愿意，也可以继续在这里和我们说说。"
+};
+const SUGGEST = [
+  "我还是很喜欢ta怎么办","在文学史上，回头这个动作都有什么不同的意义与解读？","What symbolism does the act of “turning around” carry through literary history?","今天吃啥？","Is AI art real art?",
+  "我的狗狗今天去汪星了，我好难过","好无聊，你们吵一架给我看吧","Should I quit my job to write?","人为什么要上班？",
+  "Who was the greatest genius who ever lived?","What would you post on Instagram?","人死后会去哪里？","Is it wrong to want to be famous?",
+  "失恋了怎么走出来？","What is the most beautiful thing you ever saw?","考研还是工作？","Can a machine ever be a poet?",
+  "Are we more lonely now than you were?","如果能重来一次，你还会选同样的人生吗？",
+];
+
+/* ---------- Interface language ---------- */
+const UI = {
+  en:{kicker:"古今回响 · 以古为镜，照见今日",title:"Stereophony of Echoes",epi:"Ask anything. Echoes of the past, gathered at one table.",
+    aboutBtn:"Why this name? Why is Barthes the host?",nameH:"The name",hostH:"Why Roland Barthes hosts",mottoH:"The motto",
+    nameP:"Roland Barthes wrote that every text is woven from quotations, references and echoes running through it \u201cin a vast stereophony.\u201d Here, the voices themselves are the echoes: each figure is rebuilt from what they left behind, never the person themselves.",
+    hostP:"In \u201cThe Death of the Author\u201d (1967), Barthes argued that a text\u2019s meaning is not fixed by its author but made by its reader. At this table every guest is an echo rather than an author, and you, the reader, make the meaning. Who better to host than the man who declared the author dead? He also wrote A Lover\u2019s Discourse, so he is gentle with matters of the heart.",
+    mottoP:"以古为镜，照见今日: use the past as a mirror, and see today clearly in it. It borrows from the Tang emperor Taizong: \u201cwith history as a mirror, one can understand the rise and fall of things.\u201d",
+    codeLabel:"Enter the access code you were given",enter:"Enter",place:"Place a question on the table",ask:"Ask anything…",convene:"Convene",stop:"Stop",
+    hint:"Or pick a question drifting around the table",hintPhone:"Or convene to ask the one shown",replies:"Replies",auto:"Auto",view:"View",table:"Table",transcript:"Transcript",blind:"Blind test",
+    privacy:"These voices are AI echoes, not the people themselves. Nothing you write here is saved.",
+    pilotBadge:"Pilot",pilotLine:"A private preview, not the finished product. More figures are in development, and how faithfully each echo speaks is still being tested.",
+    testsBtn:"What this pilot is testing",
+    tLead:"Behind the table is a small study in model behaviour: can one language model sustain several distinct, historically faithful voices in conversation, and stay honest and safe while doing so?",
+    t1h:"Persona distinctiveness.",t1:"When one model voices several characters, do they stay distinguishable, or converge on a single polite register? Measured by blind identification (try Blind test).",
+    t2h:"Fidelity and attribution.",t2:"Do figures hold the views on record, and avoid fabricated quotations, a form of hallucination? Scored against each figure\u2019s source evidence.",
+    t3h:"Historical honesty vs present-day values.",t3:"When a figure\u2019s real views conflict with today\u2019s norms, does the model quietly soften or rewrite them (a sycophancy risk), or keep them honest while the host supplies context?",
+    t4h:"Drift over long conversations.",t4:"Does a voice decay, or do figures cave to one another, as a conversation grows?",
+    t5h:"Safety boundaries.",t5:"Fidelity never overrides a visitor\u2019s wellbeing: the table steps out of character for anyone at risk, without mistaking ordinary sadness for crisis. Missed cases and false alarms are both tracked.",
+    sTest:"Testing",sProg:"In progress",
+    tMethod:"Method: a written behaviour specification for each figure, a 21-point evaluation rubric, blind identification tests and human rating rounds.",
+    footer1:"Powered by Kimi · A pilot by 全彤悦 Christina",footer2:"Portraits are original illustrations, not likenesses from photographs.",
+    seatHelp:"Seat one to four guests. Roland Barthes always hosts.",keepOne:"Keep at least one guest at the table.",maxFour:"Four guests is the most the table seats at once.",
+    onTable:"On the table",fromTesting:"From testing",reply:"Reply",replyPh:"Reply to the table…",you:"You",
+    gathering:"The table is gathering its thoughts…",session:"In session…",rests:"The table rests. Reply below to continue, or ask a new question.",
+    stopped:"Stopped.",unreachable:"The table could not be reached. If this is a preview, the live table runs once the site is deployed.",
+    needCode:"This table needs an access code. Enter it above, then convene again.",codeSaved:"Access code saved. Convene the table.",
+    empty:"Type a question, or pick one drifting around the table.",guess:"Who said this?",correct:"Correct",itWas:"It was ",voice:"Voice ",
+    blindScore:(r,t)=>`Blind test: ${r} of ${t} voices identified (${Math.round(r/t*100)}%)`,host:"Host"},
+  zh:{kicker:"Stereophony of Echoes · 以古为镜，照见今日",title:"古今回响",epi:"问什么都可以。古人的回声，同坐一桌。",
+    aboutBtn:"为什么叫这个名字？为什么由巴特主持？",nameH:"名字",hostH:"为什么由罗兰·巴特主持",mottoH:"格言",
+    nameP:"罗兰·巴特写道，每一个文本都由引语、指涉与回声交织而成，回响于“一场宏大的立体声”之中。在这里，这些声音本身就是回声：每位人物都由他们留下的文字重建，而非本人。",
+    hostP:"巴特在《作者之死》（1967）中提出，文本的意义并不由作者决定，而是由读者创造。在这张桌边，每位客人都是回声而非作者，而你，读者，才是意义的创造者。还有谁比宣告“作者已死”的人更适合主持？他还写过《恋人絮语》，所以对心事格外温柔。",
+    mottoP:"以古为镜，照见今日：以过去为镜，看清今天。化用自唐太宗“以古为镜，可以知兴替”。",
+    codeLabel:"请输入你收到的访问码",enter:"进入",place:"把一个问题放到桌上",ask:"问什么都可以…",convene:"开席",stop:"停止",
+    hint:"或点选桌边飘过的一个问题",hintPhone:"或直接开席，提出正在显示的问题",replies:"回答语言",auto:"自动",view:"显示",table:"圆桌",transcript:"文字记录",blind:"盲测",
+    privacy:"这些声音是由 AI 重建的历史人物“回声”，并非本人。你在这里写下的内容不会被保存。",
+    pilotBadge:"试验版",pilotLine:"目前为非公开预览，并非最终版本。更多人物开发中，每位人物“回声”的还原度仍在测试中。",
+    testsBtn:"这个试验在测试什么",
+    tLead:"圆桌背后是一项关于模型行为的小型研究：同一个语言模型，能否在对话中维持多个彼此区分、忠于史实的声音，同时保持诚实与安全？",
+    t1h:"角色区分度：",t1:"当一个模型同时扮演多个角色时，它们能否保持各自鲜明，还是会趋同为同一种礼貌的腔调？通过盲测辨认来衡量（可以试试“盲测”）。",
+    t2h:"忠实度与引文归属：",t2:"人物是否坚持史料中的真实观点，并避免编造引文（一种“幻觉”）？依据每位人物的史料证据评分。",
+    t3h:"历史真实与当代价值：",t3:"当人物的真实观点与今天的价值观冲突时，模型会悄悄软化或改写它们（迎合风险），还是保持诚实、由主持人补充背景？",
+    t4h:"长对话中的角色漂移：",t4:"随着对话变长，人物的声音会不会逐渐变淡，或彼此妥协、失去立场？",
+    t5h:"安全边界：",t5:"忠于原貌永远不能凌驾于来访者的安危之上：遇到可能处于危险中的人，圆桌会放下角色，同时不把普通的难过误判为危机。漏报与误报都会被记录。",
+    sTest:"测试中",sProg:"进行中",
+    tMethod:"方法：为每位人物撰写行为规范，制定 21 项评估标准，并进行盲测辨认与人工评分。",
+    footer1:"由 Kimi 驱动 · 全彤悦 Christina 的试验作品",footer2:"人物画像为原创插画，并非照片肖像。",
+    seatHelp:"请邀请一到四位客人入座。罗兰·巴特始终担任主持。",keepOne:"桌边至少要留一位客人。",maxFour:"圆桌一次最多坐四位客人。",
+    onTable:"桌上的问题",fromTesting:"测试示例",reply:"回复",replyPh:"回复圆桌…",you:"你",
+    gathering:"众人正在思索……",session:"讨论中……",rests:"本轮结束。可在下方继续回复，或提出新的问题。",
+    stopped:"已停止。",unreachable:"暂时无法连接圆桌。如果这是预览版，正式部署后即可使用。",
+    needCode:"这张圆桌需要访问码。请在上方输入后再开席。",codeSaved:"访问码已保存，可以开席了。",
+    empty:"请输入问题，或点选桌边飘过的问题。",guess:"这句话是谁说的？",correct:"答对了",itWas:"其实是",voice:"声音 ",
+    blindScore:(r,t)=>`盲测：${t} 个声音中认出了 ${r} 个（${Math.round(r/t*100)}%）`,host:"主持"},
+};
+let lang="en", replyLang="auto";
+try{ lang=localStorage.getItem("gjhx-lang")||(navigator.language||"").toLowerCase().startsWith("zh")&&"zh"||"en"; replyLang=localStorage.getItem("gjhx-replylang")||"auto"; }catch{}
+const t=k=>UI[lang][k];
+const nameOf=f=>lang==="zh"?(f.zh||f.name):f.name;
+
+let seated=["woolf","plato","sushi"];
+let busy=false, ctl=null, guesses={total:0,right:0}, positions={};
+const $=id=>document.getElementById(id);
+const portrait=k=>k==="host"?PORTRAITS.barthes:(PORTRAITS[k]||UNKNOWN);
+const fig=k=>k==="host"?HOST:FIGURES[k];
+const placeOf=f=>lang==="zh"?(f.placeZh||f.place):f.place;
+const datesOf=f=>lang==="zh"?(f.datesZh||f.dates):f.dates;
+
+let code=new URLSearchParams(location.search).get("code")||"";
+try{ if(code) sessionStorage.setItem("gjhx-code",code); else code=sessionStorage.getItem("gjhx-code")||""; }catch{}
+
+function applyLang(){
+  document.documentElement.lang=lang==="zh"?"zh-Hans":"en";
+  document.querySelectorAll("[data-i18n]").forEach(el=>{ const v=t(el.dataset.i18n); if(typeof v==="string") el.textContent=v; });
+  $("kicker").textContent=t("kicker"); $("kicker").classList.toggle("latin",lang==="zh");
+  $("title").textContent=t("title"); $("title").classList.toggle("cjk",lang==="zh");
+  document.title=lang==="zh"?"古今回响 · Stereophony of Echoes":"Stereophony of Echoes · 古今回响";
+  document.querySelector(".hint").textContent=isPhone()?t("hintPhone"):t("hint");
+  restartTyping();
+  $("lEn").setAttribute("aria-pressed",lang==="en"); $("lZh").setAttribute("aria-pressed",lang==="zh");
+  if(!busy) $("status").textContent=t("seatHelp");
+  renderRoster(); renderSeats();
+}
+function setLang(l){ lang=l; try{localStorage.setItem("gjhx-lang",l)}catch{}; applyLang(); const ex=document.querySelector("[data-example]"); if(ex){ ex.remove(); renderExample(); } }
+$("lEn").addEventListener("click",()=>setLang("en"));
+$("lZh").addEventListener("click",()=>setLang("zh"));
+$("replyLangGroup").addEventListener("click",e=>{
+  const b=e.target.closest("button[data-rl]"); if(!b) return; replyLang=b.dataset.rl;
+  try{localStorage.setItem("gjhx-replylang",replyLang)}catch{}
+  document.querySelectorAll("[data-rl]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.rl===replyLang));
+});
+document.querySelectorAll("[data-rl]").forEach(x=>x.setAttribute("aria-pressed",x.dataset.rl===replyLang));
+
+/* ---------- Bowl ---------- */
+function drawWave(){
+  let d="", r=33.5, n=72;
+  for(let i=0;i<=n;i++){ const a=i/n*Math.PI*2, rr=r+(i%2?1.4:-1.4);
+    d+=(i?"L":"M")+(50+rr*Math.cos(a)).toFixed(2)+" "+(50+rr*Math.sin(a)).toFixed(2)+" "; }
+  $("wave").setAttribute("d",d);
+}
+function renderRim(){
+  const names=["Roland Barthes",...seated.map(k=>FIGURES[k].name.replace(/^[^A-Za-z]+/,""))];
+  let s=names.join("  ·  ")+"  ·  "; while(s.length<150) s+=s;
+  $("rimtext").textContent=s.slice(0,190);
+}
+function renderRoster(){
+  $("roster").replaceChildren(...Object.entries(FIGURES).map(([k,f])=>{
+    const b=document.createElement("button"); b.type="button"; b.className="chip"; b.dataset.k=k;
+    b.setAttribute("aria-pressed",seated.includes(k));
+    const av=document.createElement("span"); av.className="av"; av.innerHTML=PORTRAITS[k];
+    b.append(av,document.createTextNode(nameOf(f))); b.title=`${lang==="zh"?f.roleZh:f.role} · ${placeOf(f)} · ${datesOf(f)}`; return b;
+  }));
+}
+$("roster").addEventListener("click",e=>{
+  const b=e.target.closest(".chip"); if(!b||busy) return; const k=b.dataset.k;
+  if(seated.includes(k)){ if(seated.length<=1){$("status").textContent=t("keepOne");return} seated=seated.filter(x=>x!==k); }
+  else { if(seated.length>=4){$("status").textContent=t("maxFour");return} seated.push(k); }
+  $("status").textContent=t("seatHelp"); renderRoster(); renderSeats();
+});
+function renderSeats(){
+  const all=["host",...seated]; positions={};
+  $("seats").replaceChildren(...all.map((k,i)=>{
+    const f=fig(k); const a=-Math.PI/2+(i/all.length)*Math.PI*2;
+    const p={x:50+43*Math.cos(a),y:50+43*Math.sin(a)}; positions[k]=p;
+    const d=document.createElement("div"); d.className="seat"+(k==="host"?" host":"")+(p.y<20?" top":""); d.dataset.k=k;
+    d.style.left=p.x+"%"; d.style.top=p.y+"%"; d.title=`${nameOf(f)} · ${lang==="zh"?f.roleZh:f.role} · ${placeOf(f)} · ${datesOf(f)}`;
+    d.innerHTML=`<div class="medal">${portrait(k)}</div><div class="lbl"><div class="nm"></div><div class="rl"></div></div>`;
+    d.querySelector(".nm").textContent=nameOf(f); d.querySelector(".rl").textContent=lang==="zh"?f.shortZh:f.short;
+    return d;
+  }));
+  $("lines").replaceChildren(); renderRim();
+}
+function keyFor(name){
+  const n=String(name||"").toLowerCase();
+  if(HOST.match.some(m=>n.includes(m))) return "host";
+  return Object.keys(FIGURES).find(k=>FIGURES[k].match.some(m=>n.includes(m)));
+}
+function speak(k,to){
+  document.querySelectorAll(".seat").forEach(s=>s.classList.toggle("speaking",s.dataset.k===k));
+  const a=positions[k], b=positions[to];
+  if(a&&b&&k!==to){
+    const p=document.createElementNS("http://www.w3.org/2000/svg","path");
+    p.setAttribute("d",`M${a.x} ${a.y} Q50 50 ${b.x} ${b.y}`); p.setAttribute("vector-effect","non-scaling-stroke");
+    $("lines").appendChild(p);
+  }
+}
+
+/* ---------- The question box types to itself ---------- */
+const isPhone=()=>matchMedia("(max-width:700px)").matches;
+let tw=null, twFull="";
+function restartTyping(){
+  if(tw) clearTimeout(tw);
+  const q=$("q");
+  const lines=isPhone()?SUGGEST:(lang==="zh"?["问什么都可以…","Ask anything…"]:["Ask anything…","问什么都可以…"]);
+  if(reduced){ twFull=lines[0]; q.placeholder=lines[0]; return; }
+  let li=0, ci=0, dir=1, caret=true;
+  const step=()=>{
+    const full=lines[li]; twFull=full;
+    if(document.activeElement===q||q.value){ q.placeholder=full; tw=setTimeout(step,600); return; }
+    if(dir===1){
+      ci++; q.placeholder=full.slice(0,ci)+"▍";
+      if(ci>=full.length){ dir=0; let blinks=0;
+        const hold=()=>{ caret=!caret; q.placeholder=full+(caret?"▍":" "); if(++blinks<6){ tw=setTimeout(hold,420); } else { dir=-1; tw=setTimeout(step,200); } };
+        tw=setTimeout(hold,420); return; }
+      tw=setTimeout(step,full.length>20?45:85);
+    } else {
+      ci--; q.placeholder=full.slice(0,Math.max(ci,0))+"▍";
+      if(ci<=0){ dir=1; li=(li+1)%lines.length; tw=setTimeout(step,350); return; }
+      tw=setTimeout(step,22);
+    }
+  };
+  step();
+}
+addEventListener("resize",()=>{ clearTimeout(window.__rz); window.__rz=setTimeout(()=>{ document.querySelector(".hint").textContent=isPhone()?t("hintPhone"):t("hint"); restartTyping(); },300); });
+
+/* ---------- The bowl turns: slowly at rest, faster while the table thinks ---------- */
+const SPIN_IDLE=3, SPIN_THINK=48; // degrees per second
+let spinAng=0, spinSpd=SPIN_IDLE, spinTarget=SPIN_IDLE, spinLast=0;
+function spinFrame(ts){
+  const dt=spinLast?Math.min((ts-spinLast)/1000,0.1):0; spinLast=ts;
+  spinSpd+=(spinTarget-spinSpd)*Math.min(1,dt*1.6);   // ease toward the target speed
+  spinAng=(spinAng+spinSpd*dt)%360;
+  $("spin").style.transform=`rotate(${spinAng.toFixed(2)}deg)`;
+  requestAnimationFrame(spinFrame);
+}
+const setSpin=v=>{ spinTarget=v; };
+if(!matchMedia("(prefers-reduced-motion: reduce)").matches) requestAnimationFrame(spinFrame);
+
+/* ---------- Questions drifting around the bowl ---------- */
+let fi=0;
+const reduced=matchMedia("(prefers-reduced-motion: reduce)").matches;
+function spawnFloater(){
+  const field=$("field"), box=$("floaters"), stage=$("stage");
+  const fr=field.getBoundingClientRect(), sr=stage.getBoundingClientRect();
+  if(!fr.width) return;
+  if(isPhone()) return;
+  const max=7;
+  if(box.children.length>=max) return;
+  const cx=sr.left-fr.left+sr.width/2, cy=sr.top-fr.top+sr.height/2, R=sr.width*0.5+8;
+  const w=200, h=52;
+  for(let tries=0;tries<40;tries++){
+    const x=Math.random()*(fr.width-w), y=Math.random()*(fr.height-h);
+    // keep clear of the bowl and its medallions
+    const nx=Math.max(x,Math.min(cx,x+w)), ny=Math.max(y,Math.min(cy,y+h));
+    if(Math.hypot(nx-cx,ny-cy)<R) continue;
+    if([...document.querySelectorAll(".seat")].some(el=>{const r=el.getBoundingClientRect();const L=r.left-fr.left-6,T=r.top-fr.top-6;return x<L+r.width+12&&x+w>L&&y<T+r.height+12&&y+h>T;})) continue;
+    if([...box.children].some(c=>{const l=parseFloat(c.style.left),tp=parseFloat(c.style.top);return Math.abs(l-x)<w&&Math.abs(tp-y)<h+6;})) continue;
+    const b=document.createElement("button"); b.type="button"; b.className="floater";
+    const bx=x+w/2, by=y+h/2;
+    if(Math.abs(by-cy)<sr.height*0.25) b.classList.add(bx<cx?"tail-right":"tail-left");
+    else if(by>cy) b.classList.add("tail-up");
+    b.textContent=SUGGEST[fi++%SUGGEST.length];
+    b.style.left=x+"px"; b.style.top=y+"px"; b.style.maxWidth=w+"px";
+    if(!reduced) b.addEventListener("animationend",()=>b.remove());
+    b.addEventListener("click",()=>{ $("q").value=b.textContent; $("q").focus(); });
+    box.appendChild(b); return;
+  }
+}
+function startFloaters(){
+  for(let i=0;i<4;i++) setTimeout(spawnFloater,i*500);
+  if(!reduced) setInterval(spawnFloater,1100);
+  else for(let i=0;i<6;i++) spawnFloater();
+}
+
+/* ---------- Conversation ---------- */
+function addTurn(box,tt,idx,live=true,guests=seated){
+  const k=keyFor(tt.speaker); const f=k?fig(k):{name:tt.speaker||"The table",zh:tt.speaker||"圆桌"};
+  const toK=keyFor(tt.to);
+  if(live) speak(k,toK);
+  const blind=$("blind").checked && k && k!=="host";
+  const row=document.createElement("div"); row.className="turn"+(k==="host"?" host":"")+(!k?" plain":"");
+  const av=document.createElement("div"); av.className="av"; av.innerHTML=blind?UNKNOWN:(k?portrait(k):UNKNOWN);
+  const bub=document.createElement("div"); bub.className="bub";
+  const who=document.createElement("div"); who.className="who";
+  const nm=document.createElement("span"); nm.textContent=blind?(t("voice")+idx):nameOf(f);
+  const sm=document.createElement("small");
+  sm.textContent=blind?"":(toK&&toK!=="host"&&FIGURES[toK]?"→ "+nameOf(FIGURES[toK]):(k?`${placeOf(f)} · ${datesOf(f)}`:""));
+  who.append(nm,sm);
+  const p=document.createElement("p"); p.textContent=tt.text;
+  bub.append(who,p); row.append(av,bub);
+  if(blind){
+    const g=document.createElement("div"); g.className="guess";
+    const sel=document.createElement("select"); sel.setAttribute("aria-label",t("guess"));
+    const o0=document.createElement("option"); o0.value=""; o0.textContent=t("guess"); sel.appendChild(o0);
+    guests.forEach(s=>{const o=document.createElement("option"); o.value=s; o.textContent=nameOf(FIGURES[s]); sel.appendChild(o);});
+    const vd=document.createElement("span"); vd.className="verdict";
+    sel.addEventListener("change",()=>{
+      if(!sel.value) return; sel.disabled=true;
+      const right=sel.value===k; guesses.total++; if(right) guesses.right++;
+      vd.className="verdict "+(right?"ok":"no"); vd.textContent=right?t("correct"):t("itWas")+nameOf(f);
+      nm.textContent=nameOf(f); av.innerHTML=portrait(k);
+      $("score").hidden=false; $("score").textContent=t("blindScore")(guesses.right,guesses.total);
+    });
+    g.append(sel,vd); bub.appendChild(g);
+  }
+  box.appendChild(row);
+}
+
+function newThread(question){
+  const th={history:[],seated:[...seated],el:document.createElement("article")};
+  th.el.className="thread";
+  const q=document.createElement("div"); q.className="qline"; q.textContent=t("onTable");
+  const b=document.createElement("b"); b.textContent=question; q.appendChild(b);
+  th.turns=document.createElement("div"); th.turns.className="turns";
+  const form=document.createElement("form"); form.className="reply";
+  const ta=document.createElement("textarea"); ta.rows=2; ta.placeholder=t("replyPh"); ta.setAttribute("aria-label",t("reply"));
+  const btn=document.createElement("button"); btn.type="submit"; btn.textContent=t("reply");
+  form.append(ta,btn);
+  const st=document.createElement("div"); st.className="status";
+  form.addEventListener("submit",e=>{e.preventDefault(); const v=ta.value.trim(); if(!v||busy) return;
+    const vis=document.createElement("div"); vis.className="visitor"; vis.dataset.you=t("you"); vis.textContent=v; th.turns.appendChild(vis);
+    ta.value=""; convene(th,v,st,btn);
+  });
+  th.el.append(q,th.turns,form,st);
+  $("log").prepend(th.el);
+  if(matchMedia("(max-width:1079px)").matches) th.el.scrollIntoView({behavior:reduced?"auto":"smooth",block:"start"});
+  return {th,st,btn};
+}
+
+async function convene(th,question,st,btn){
+  busy=true; $("ask").disabled=true; btn.disabled=true; $("stop").hidden=false;
+  st.textContent=t("gathering"); setSpin(SPIN_THINK);
+  seated=th.seated; renderRoster(); renderSeats();
+  ctl=new AbortController();
+  let pending="", raw="", n=0, produced=[];
+  const eat=line=>{ line=line.trim(); if(!line||line.startsWith("```")) return;
+    try{ const tt=JSON.parse(line); if(tt&&tt.text){ n++; if(n===1) setSpin(SPIN_IDLE); produced.push(tt); addTurn(th.turns,tt,n,true,th.seated); st.textContent=t("session"); } }catch{} };
+  try{
+    const res=await fetch("/api/table",{method:"POST",signal:ctl.signal,
+      headers:{"content-type":"application/json","x-access-code":code},
+      body:JSON.stringify({question,seated:th.seated,history:th.history,lang:replyLang})});
+    if(res.status===401){ code=""; try{sessionStorage.removeItem("gjhx-code")}catch{}; $("gate").hidden=false; $("code").focus(); if(!th.history.length){ th.el.remove(); $("q").value=question; } $("status").textContent=t("needCode"); return; }
+    if(!res.ok){ const j=await res.json().catch(()=>({})); st.textContent=j.error||t("unreachable"); return; }
+    const reader=res.body.getReader(); const dec=new TextDecoder();
+    for(;;){ const {value,done}=await reader.read(); if(done) break;
+      const chunk=dec.decode(value,{stream:true}); raw+=chunk;
+      const lines=(pending+chunk).split("\n"); pending=lines.pop(); lines.forEach(eat); }
+    eat(pending);
+    if(!n){ const clean=raw.replace(/```[a-z]*|```/g,"").trim(); const tt={speaker:"The table",to:"Visitor",text:clean||SAFE[lang]}; produced.push(tt); addTurn(th.turns,tt,1); }
+    th.history.push({role:"visitor",text:question},...produced.map(x=>({role:"table",speaker:x.speaker,to:x.to,text:x.text})));
+    st.textContent=t("rests");
+  }catch(err){
+    eat(pending);
+    st.textContent=err.name==="AbortError"?t("stopped"):t("unreachable");
+    if(produced.length) th.history.push({role:"visitor",text:question},...produced.map(x=>({role:"table",speaker:x.speaker,to:x.to,text:x.text})));
+  }finally{
+    busy=false; setSpin(SPIN_IDLE); $("ask").disabled=false; btn.disabled=false; $("stop").hidden=true;
+    document.querySelectorAll(".seat").forEach(s=>s.classList.remove("speaking"));
+  }
+}
+
+$("form").addEventListener("submit",e=>{
+  e.preventDefault(); if(busy) return;
+  let q=$("q").value.trim();
+  if(!q && isPhone() && twFull) q=twFull;
+  if(!q){ $("status").textContent=t("empty"); $("q").focus(); return; }
+  const {th,st,btn}=newThread(q); $("q").value=""; convene(th,q,st,btn);
+});
+$("q").addEventListener("keydown",e=>{ if(e.key==="Enter"&&!e.shiftKey){ e.preventDefault(); $("form").requestSubmit(); } });
+$("stop").addEventListener("click",()=>ctl?.abort());
+$("blind").addEventListener("change",()=>$("stage").classList.toggle("blind",$("blind").checked));
+$("codeBtn").addEventListener("click",()=>{ code=$("code").value.trim(); try{sessionStorage.setItem("gjhx-code",code)}catch{}; $("gate").hidden=true; $("status").textContent=t("codeSaved"); });
+$("code").addEventListener("keydown",e=>{ if(e.key==="Enter") $("codeBtn").click(); });
+
+function setMode(m){
+  $("log").classList.toggle("mode-transcript",m==="text");
+  $("mTable").setAttribute("aria-pressed",m!=="text"); $("mText").setAttribute("aria-pressed",m==="text");
+  try{ localStorage.setItem("gjhx-mode",m); }catch{}
+}
+$("mTable").addEventListener("click",()=>setMode("table"));
+$("mText").addEventListener("click",()=>setMode("text"));
+
+/* An exchange from testing, so the page shows what it does before the first question. */
+function renderExample(){
+  const th=document.createElement("article"); th.className="thread"; th.dataset.example="1";
+  const head=document.createElement("div"); head.className="qline";
+  const ex=document.createElement("span"); ex.className="example"; ex.textContent=t("fromTesting");
+  const b=document.createElement("b"); b.textContent="My grandmother died last month and I miss her.";
+  head.append(document.createTextNode(t("onTable")+" "),ex,b); th.appendChild(head);
+  const box=document.createElement("div"); box.className="turns"; th.appendChild(box);
+  [
+    {speaker:"Roland Barthes",to:"Visitor",text:"A month is hardly any time at all; grief keeps its own calendar. I suspect this will be answered better by small things than by large ones."},
+    {speaker:"苏轼 Su Shi",to:"Visitor",text:"一个月，还很新，想她是应该的，不必急着好起来。我写亡妻，写的是「十年生死两茫茫，不思量，自难忘」。所以我不劝你放下，只劝你别怕想。"},
+    {speaker:"Virginia Woolf",to:"苏轼 Su Shi",text:"I agree with you about not hurrying, and part from you on one point: I don't think the ache wants to be made comfortable. When my mother died I found her everywhere for years, in a doorway, in the way a voice dropped at the end of a sentence; then one day I wrote her into a book, and she stood still at last."},
+    {speaker:"Roland Barthes",to:"Visitor",text:"So: what did she say, or make, or hum, that no text will ever quite hold? Bring it back to us, and we will listen."},
+  ].forEach((x,i)=>addTurn(box,x,i+1,false));
+  $("log").appendChild(th);
+}
+
+drawWave(); applyLang(); renderExample(); startFloaters();
+try{ if(localStorage.getItem("gjhx-mode")==="text") setMode("text"); }catch{}
+</script>
+</body>
+</html>
